@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "xhr2": "github:gdi2290/typed-xhr2#69f2b8d40d0cd407c1b2a2f2f41fecc6852cabbb"
+  },
+  "devDependencies": {},
+  "globalDependencies": {
+    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#9807d9b701f58be068cb07833d2b24235351d052",
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "ng2": "github:gdi2290/typings-ng2/ng2.d.ts#32998ff5584c0eab0cd9dc7704abb1c5c450701c"
+  }
+}
