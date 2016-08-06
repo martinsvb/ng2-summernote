@@ -177,33 +177,32 @@ export class Ng2Summernote {
                 dialogsInBody: this._setLogicVars(this.dialogsInBody, false),
                 editable: this.editable,
                 lang: this.lang,
-                disableResizeEditor: this._setLogicVars(this.disableResizeEditor, false),
-                callbacks: {
-                    onChange: (evt: any) => {
-                        this.updateValue(evt);
-                    },
-                    onInit: (evt: any) => {}
-                }
+                disableResizeEditor: this._setLogicVars(this.disableResizeEditor, false)
             };
             
+            this._config.callbacks = {
+                onChange: (evt: any) => {
+                    this.updateValue(evt);
+                },
+                onInit: (evt: any) => {}
+            };
+
             if (typeof this.serverImgUp !== 'undefined') {
-                this._config.callbacks = {
-                    onImageUpload: (files: string) => {
-                        this._imageUpload({files: files, editable: this.editable});
-                    },
-                    onMediaDelete: (target: [any]) => {
-                        let fileUrl: string;
-                        let attributes: any = target[0].attributes;
-                        for (let i = 0; i < attributes.length; i++) {
-                            if (attributes[i].name == "src") {
-                                fileUrl = attributes[i].value;
-                            }
+                this._config.callbacks.onImageUpload = (files: string) => {
+                    this._imageUpload({files: files, editable: this.editable});
+                };
+                this._config.callbacks.onMediaDelete = (target: [any]) => {
+                    let fileUrl: string;
+                    let attributes: any = target[0].attributes;
+                    for (let i = 0; i < attributes.length; i++) {
+                        if (attributes[i].name == "src") {
+                            fileUrl = attributes[i].value;
                         }
-                        this._mediaDelete(fileUrl)
-                            .then((resp: any) => { console.log(resp.json()) })
-                            .catch((err: any) => { this._errHandle(err.json()) });
                     }
-                }
+                    this._mediaDelete(fileUrl)
+                        .then((resp: any) => { console.log(resp.json()) })
+                        .catch((err: any) => { this._errHandle(err.json()) });
+                };
             }
 
             $(this._elementRef.nativeElement).find('.summernote').summernote(this._config);

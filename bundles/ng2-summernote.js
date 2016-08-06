@@ -136,36 +136,34 @@ System.registerDynamic("ng2-summernote", ["@angular/core", "@angular/forms", "@a
           dialogsInBody: this._setLogicVars(this.dialogsInBody, false),
           editable: this.editable,
           lang: this.lang,
-          disableResizeEditor: this._setLogicVars(this.disableResizeEditor, false),
-          callbacks: {
-            onChange: function(evt) {
-              _this.updateValue(evt);
-            },
-            onInit: function(evt) {}
-          }
+          disableResizeEditor: this._setLogicVars(this.disableResizeEditor, false)
+        };
+        this._config.callbacks = {
+          onChange: function(evt) {
+            _this.updateValue(evt);
+          },
+          onInit: function(evt) {}
         };
         if (typeof this.serverImgUp !== 'undefined') {
-          this._config.callbacks = {
-            onImageUpload: function(files) {
-              _this._imageUpload({
-                files: files,
-                editable: _this.editable
-              });
-            },
-            onMediaDelete: function(target) {
-              var fileUrl;
-              var attributes = target[0].attributes;
-              for (var i = 0; i < attributes.length; i++) {
-                if (attributes[i].name == "src") {
-                  fileUrl = attributes[i].value;
-                }
+          this._config.callbacks.onImageUpload = function(files) {
+            _this._imageUpload({
+              files: files,
+              editable: _this.editable
+            });
+          };
+          this._config.callbacks.onMediaDelete = function(target) {
+            var fileUrl;
+            var attributes = target[0].attributes;
+            for (var i = 0; i < attributes.length; i++) {
+              if (attributes[i].name == "src") {
+                fileUrl = attributes[i].value;
               }
-              _this._mediaDelete(fileUrl).then(function(resp) {
-                console.log(resp.json());
-              }).catch(function(err) {
-                _this._errHandle(err.json());
-              });
             }
+            _this._mediaDelete(fileUrl).then(function(resp) {
+              console.log(resp.json());
+            }).catch(function(err) {
+              _this._errHandle(err.json());
+            });
           };
         }
         $(this._elementRef.nativeElement).find('.summernote').summernote(this._config);

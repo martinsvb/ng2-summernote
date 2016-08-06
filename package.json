@@ -1,6 +1,6 @@
 {
   "name": "ng2-summernote",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "license": "MIT",
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",
