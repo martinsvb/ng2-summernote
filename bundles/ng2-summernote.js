@@ -74,6 +74,7 @@ System.registerDynamic("ng2-summernote", ["@angular/core", "@angular/forms", "@a
         var data = new FormData();
         data.append("file", dataUpload.files[0]);
         data.append("action", "upload");
+        data.append("image", "resizeNoThumb");
         data.append("folder", this.uploadFolder);
         $.post({
           data: data,
@@ -83,7 +84,7 @@ System.registerDynamic("ng2-summernote", ["@angular/core", "@angular/forms", "@a
           contentType: false,
           processData: false,
           success: function(uploadedImg) {
-            var insertImg = $('<img style="width: 100%;" src="' + uploadedImg.data[0] + '" />');
+            var insertImg = $('<img style="width: 100%;" src="' + uploadedImg.data[0].fileName + '" />');
             $(_this._elementRef.nativeElement).find('.summernote').summernote('insertNode', insertImg[0]);
             console.log("Uploaded image: " + uploadedImg.data[0]);
           },

@@ -94,6 +94,7 @@ export class Ng2Summernote {
             let data = new FormData();
             data.append("file", dataUpload.files[0]);
             data.append("action", "upload");
+            data.append("image", "resizeNoThumb");
             data.append("folder", this.uploadFolder);
             $.post({
                 data: data,
@@ -103,7 +104,7 @@ export class Ng2Summernote {
                 contentType: false,
                 processData: false,
                 success: (uploadedImg: any) => {
-                    let insertImg = $('<img style="width: 100%;" src="'+uploadedImg.data[0]+'" />');
+                    let insertImg = $('<img style="width: 100%;" src="' + uploadedImg.data[0].fileName + '" />');
                     $(this._elementRef.nativeElement).find('.summernote').summernote('insertNode', insertImg[0]);
                     console.log("Uploaded image: " + uploadedImg.data[0]);
                 },
