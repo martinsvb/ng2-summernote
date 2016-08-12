@@ -83,9 +83,9 @@ System.registerDynamic("ng2-summernote", ["@angular/core", "@angular/forms", "@a
           contentType: false,
           processData: false,
           success: function(uploadedImg) {
-            var insertImg = $('<img style="width: 100%;" src="' + uploadedImg[0] + '" />');
+            var insertImg = $('<img style="width: 100%;" src="' + uploadedImg.data[0] + '" />');
             $(_this._elementRef.nativeElement).find('.summernote').summernote('insertNode', insertImg[0]);
-            console.log("Uploaded image: " + uploadedImg[0]);
+            console.log("Uploaded image: " + uploadedImg.data[0]);
           },
           error: function(err) {
             _this._errHandle(err);
@@ -160,9 +160,9 @@ System.registerDynamic("ng2-summernote", ["@angular/core", "@angular/forms", "@a
               }
             }
             _this._mediaDelete(fileUrl).then(function(resp) {
-              console.log(resp.json());
+              console.log(resp.json().data);
             }).catch(function(err) {
-              _this._errHandle(err.json());
+              _this._errHandle(err);
             });
           };
         }

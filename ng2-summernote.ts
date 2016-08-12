@@ -103,9 +103,9 @@ export class Ng2Summernote {
                 contentType: false,
                 processData: false,
                 success: (uploadedImg: any) => {
-                    let insertImg = $('<img style="width: 100%;" src="'+uploadedImg[0]+'" />');
+                    let insertImg = $('<img style="width: 100%;" src="'+uploadedImg.data[0]+'" />');
                     $(this._elementRef.nativeElement).find('.summernote').summernote('insertNode', insertImg[0]);
-                    console.log("Uploaded image: " + uploadedImg[0]);
+                    console.log("Uploaded image: " + uploadedImg.data[0]);
                 },
                 error: (err: any) => { this._errHandle(err) }
             });
@@ -200,8 +200,8 @@ export class Ng2Summernote {
                         }
                     }
                     this._mediaDelete(fileUrl)
-                        .then((resp: any) => { console.log(resp.json()) })
-                        .catch((err: any) => { this._errHandle(err.json()) });
+                        .then((resp: any) => { console.log(resp.json().data) })
+                        .catch((err: any) => { this._errHandle(err) });
                 };
             }
 
