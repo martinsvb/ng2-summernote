@@ -5,7 +5,6 @@ import {
   ElementRef,
   EventEmitter,
   NgZone,
-  Provider,
   Inject,
   forwardRef
 } from '@angular/core';
@@ -16,18 +15,15 @@ import 'rxjs/add/operator/toPromise';
 
 declare var $: any;
 
-// Control Value accessor provider
-const NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR = new Provider(
-  NG_VALUE_ACCESSOR,
-  {
-    useExisting: forwardRef(() => Ng2Summernote),
-    multi: true
-  }
-);
-
 @Component({
   selector: 'ng2-summernote',
-  providers: [NG2SUMMERNOTE_CONTROL_VALUE_ACCESSOR],
+  providers: [
+    {
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => Ng2Summernote),
+        multi: true
+    }
+  ],
   template: `<div class="summernote"></div>`,
 })
 
