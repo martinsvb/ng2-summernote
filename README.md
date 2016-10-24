@@ -49,8 +49,72 @@ gulp.task('summernote', (done: any) => {
 - now summernote is available in global space
 
 ## Access ng2-summernote in Angular 2 application
+- example main app module:
+```
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { APP_BASE_HREF } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-Your component template example:
+import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
+
+import { AppComponent } from './app.component';
+import { routes } from './app.routes';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    HttpModule,
+    RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  declarations: [
+    Ng2Summernote,
+    AppComponent
+  ],
+  providers: [
+    {
+        provide: APP_BASE_HREF,
+        useValue: '<%= APP_BASE %>'
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+- Import in component:
+```
+import { Component } from '@angular/core';
+import { Ng2Summernote } from 'ng2-summernote/ng2-summernote';
+
+@Component({
+  moduleId: module.id,
+  selector: 'editor-example-component',
+  templateUrl: 'editor-example.component.html'
+})
+export class EditorExampleComponent {
+
+  // Editors ng-model bindings
+  data: string = 'appendix';
+  data2: string = 'content';
+  
+  // If you want add editors bindings to some model
+  model: any = {
+    data: this.data,
+    data2: this.data2
+  }
+  
+  // OnSubmit add current editors bindings to some model
+  onSubmit() {
+    this.model.data = this.data;
+    this.model.data2 = this.data2;
+  }
+ }
+```
+- Component template example:
 ```
   <div class="row">
     <div class="col-md-6">
@@ -62,18 +126,6 @@ Your component template example:
       <ng2-summernote [(ngModel)]="data2" height="500" lang="cs-CZ"></ng2-summernote>
     </div>
   </div>
-
-export class EditorComponent {
-  data: any = 'EditorComponent';
-  data2: any = '<p>EditorComponent2</p><p>Next paragraph</p>';
-  hostUpload: string;
-  uploadFolder: string;
-
-  constructor(urlProvider: urlProvider) {
-    this.hostUpload = "Some URL can be taken from provider here";
-    this.uploadFolder = "Upload folder can be set here";
-  }
-}
 ```
 ## Inputs
 
