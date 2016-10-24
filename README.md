@@ -13,7 +13,42 @@ This component integrate summernote wysiwyg editor as directive to Angular 2.0 p
     }
 - built lib is located in bundles
 
-## Usage example
+## Summernote source files
+- copy necessary summernote files to dist js folder, gulp example:
+```
+gulp.task('summernote', (done: any) => {
+  gulp.src([
+    './node_modules/summernote/dist/font/*'
+  ])
+  .pipe(gulp.dest('./dist/dev/assets/fonts'))
+  .pipe(gulp.dest('./dist/prod/assets/fonts'));
+
+  gulp.src([
+    './node_modules/summernote/dist/summernote.min.js',
+    './node_modules/summernote/dist/lang/summernote-cs-CZ.min.js',
+    './node_modules/summernote/dist/lang/summernote-sk-SK.min.js',
+    './node_modules/summernote/dist/lang/summernote-hu-HU.min.js',
+    './node_modules/summernote/dist/lang/summernote-pl-PL.min.js'
+  ])
+  .pipe(plugins.concat('summernote.js'))
+  .pipe(gulp.dest('./dist/dev/js'))
+  .pipe(gulp.dest('./dist/prod/js'));
+
+  return gulp.src([
+    './node_modules/summernote/dist/summernote.css'
+  ])
+  .pipe(plugins.replace('url("font', 'url("../assets/fonts'))
+  .pipe(gulp.dest('./dist/dev/css'))
+  .pipe(gulp.dest('./dist/prod/css'));
+});
+```
+- add this script to your index.html:
+```
+<script src="/js/summernote.js"></script>
+```
+- now summernote is available in global space
+
+## Access ng2-summernote in Angular 2 application
 
 Your component template example:
 ```
