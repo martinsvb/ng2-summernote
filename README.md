@@ -1,6 +1,6 @@
 # ng2-summernote
 
-This component integrate summernote wysiwyg editor as directive to Angular 2.0 project. **This fork is to fix the issue of being unable to instantiate summernote with empty strings.**.
+This component integrate summernote wysiwyg editor as directive to Angular 2.0 project.
 
 ## Install
 
