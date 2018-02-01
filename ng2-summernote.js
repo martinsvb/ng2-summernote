@@ -115,7 +115,7 @@ var Ng2Summernote = (function () {
      */
     Ng2Summernote.prototype.writeValue = function (value) {
         var _this = this;
-        if (value) {
+        if (typeof value === 'string' || value) {
             this._value = value;
             this.height = Number(this.height);
             this.editable = this._setLogicVars(this.editable, true);
