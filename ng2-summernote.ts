@@ -155,7 +155,7 @@ export class Ng2Summernote {
      * Implements ControlValueAccessor
      */
     writeValue (value: any) {
-        if (value) {
+        if (typeof value === 'string' || value) {
             this._value = value;
             
             this.height = Number(this.height);
