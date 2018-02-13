@@ -46,7 +46,7 @@ export class Ng2Summernote {
     @Input() hostUpload: string;
 
     /** Uploaded images server folder */
-    @Input() uploadFolder: string = "";
+    @Input() uploadFolder = '';
 
     @Output() change = new EventEmitter<any>();
 
@@ -76,7 +76,6 @@ export class Ng2Summernote {
     updateValue (value: any) {
         this._zone.run(() => {
             this._value = value;
-            
             this.onChange(value);
             this._onTouchedCallback();
             this.change.emit(value);
@@ -87,22 +86,22 @@ export class Ng2Summernote {
 
     private _imageUpload(dataUpload: any) {
         if (dataUpload.editable) {
-            let data = new FormData();
-            data.append("file", dataUpload.files[0]);
-            data.append("action", "upload");
-            data.append("image", "resizeNoThumb");
-            data.append("folder", this.uploadFolder);
+            const data = new FormData();
+            data.append('file', dataUpload.files[0]);
+            data.append('action', 'upload');
+            data.append('image', 'resizeNoThumb');
+            data.append('folder', this.uploadFolder);
             $.post({
                 data: data,
-                type: "POST",
+                type: 'POST',
                 url: this.hostUpload,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: (uploadedImg: any) => {
-                    let insertImg = $('<img style="width: 100%;" src="' + uploadedImg.data[0].fileName + '" />');
+                    const insertImg = $('<img style="width: 100%;" src="' + uploadedImg.data[0].fileName + '" />');
                     $(this._elementRef.nativeElement).find('.summernote').summernote('insertNode', insertImg[0]);
-                    console.log("Uploaded image: " + uploadedImg.data[0]);
+                    console.log('Uploaded image: ' + uploadedImg.data[0]);
                 },
                 error: (err: any) => { this._errHandle(err) }
             });
@@ -110,17 +109,16 @@ export class Ng2Summernote {
     }
 
     private _mediaDelete(fileUrl: string) {
-        let data: any = JSON.stringify({
-            action: "del",
+        const data: any = JSON.stringify({
+            action: 'del',
             file: fileUrl
         });
 
-        let headers = new Headers({
+        const headers = new Headers({
             'Accept': '*/*',
             'Content-Type': 'application/json'
         });
-        let options = new RequestOptions({headers: headers});
-        
+        const options = new RequestOptions({headers: headers});
         return this._http.post(this.hostUpload, data, options)
                 .toPromise()
                 .then((response: any) => response)
@@ -129,25 +127,23 @@ export class Ng2Summernote {
 
     /**
      * Set logical varibles from text input values
-     * 
      * @param any variable, logic varible for setting
      * @param boolean defaultValue, this value will be set if variable is not set
-     * 
      * @return boolean variable, finally setted variable value
      */
     private _setLogicVars(variable: any, defaultVal?: boolean) {
-      variable = typeof variable !== 'undefined' ? true : false; 
-      if (!variable && defaultVal) variable = defaultVal;
-
+      variable = typeof variable !== 'undefined' ? true : false;
+      if (!variable && defaultVal) {
+          variable = defaultVal;
+      }
       return variable;
     }
-
 
     /**
      * Hanle error in console
      */
     private _errHandle(err: any) {
-      console.error("Error");
+      console.error('Error');
       console.log(err);
     }
 
@@ -157,12 +153,11 @@ export class Ng2Summernote {
     writeValue (value: any) {
         if (typeof value === 'string' || value) {
             this._value = value;
-            
-            this.height = Number(this.height);
 
+            this.height = Number(this.height);
             this.editable = this._setLogicVars(this.editable, true);
 
-            this.lang = $.summernote.lang[this.lang] ? this.lang : 'en-US'
+            this.lang = $.summernote.lang[this.lang] ? this.lang : 'en-US';
 
             this._config = this.config || {
                 height: this.height || 200,
@@ -176,7 +171,6 @@ export class Ng2Summernote {
                 lang: this.lang,
                 disableResizeEditor: this._setLogicVars(this.disableResizeEditor, false)
             };
-            
             this._config.callbacks = {
                 onChange: (evt: any) => {
                     this.updateValue(evt);
@@ -190,9 +184,9 @@ export class Ng2Summernote {
                 };
                 this._config.callbacks.onMediaDelete = (target: [any]) => {
                     let fileUrl: string;
-                    let attributes: any = target[0].attributes;
+                    const attributes: any = target[0].attributes;
                     for (let i = 0; i < attributes.length; i++) {
-                        if (attributes[i].name == "src") {
+                        if (attributes[i].name === 'src') {
                             fileUrl = attributes[i].value;
                         }
                     }
@@ -201,7 +195,6 @@ export class Ng2Summernote {
                         .catch((err: any) => { this._errHandle(err) });
                 };
             }
-
             $(this._elementRef.nativeElement).find('.summernote').summernote(this._config);
             $(this._elementRef.nativeElement).find('.summernote').summernote('code', value);
         }
